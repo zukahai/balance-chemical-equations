@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic test</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<!--  -->
+
+<body>
+    <div class="main">
+        <input type="text" id="pthh" value="H2 + O2 = H2O">
+        <input type="button" id="button" value="Search">
+        <h1 id="result"></h1>
+        <div class="element">
+
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#button').click(function() {
+                let pthh = $('#pthh').val();
+                $.ajax({
+                    url: 'https://api-balance-chemical-equations.herokuapp.com/api/v1/pthh',
+                    type: 'GET',
+                    data: {
+                        "pthh": pthh
+                    },
+                    dataType: 'json',
+                    success: function(data, status, errors) {
+                        document.getElementById('result').innerHTML = data.result.text;
+                        for (let x in data.result.element)
+                            htmlElement = htmlElement + "<h6>" + x + ": " + data.result.element[x] + "</h6>";
+                        document.getElementById('element').innerHTML = htmlElement;
+                    },
+                    error: function(data, status, errors) {
+                        console.log(errors);
+                    }
+
+                })
+            });
+        });
+    </script>
+
+</body>
+
+</html>

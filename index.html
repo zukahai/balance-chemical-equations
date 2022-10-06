@@ -1,0 +1,84 @@
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Test API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container aligns-items-center">
+        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+            <div class="d-flex justify-content-center flex-grow-1 bg-dark" style="height:80%">
+                <div class="col col-lg-6 my-auto mx-auto">
+                    <div class="card">
+                        <h5 class="card-header">HaiZuka - balance-chemical-equations</h5>
+                        <div class="card-body">
+                            <h5 class="card-title">Nhập phương trình</h5>
+                            <p class="card-text">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" id="pthh" name="pthh" placeholder="H2 + O2 = H2O" value="H2 + O2 = H2O" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <div class="input-group-append mx-2 font-weight-bold">
+                                        <button class="btn btn-outline-danger" type="button" id="button">Search</button>
+                                    </div>
+                                </div>
+                                <h3 class="text-center text-danger" id="result"></h3>
+                                <div id="element">
+
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#button').click(function() {
+                let pthh = $('#pthh').val();
+                $.ajax({
+                    url: 'https://api-balance-chemical-equations.herokuapp.com/api/v1/pthh',
+                    type: 'GET',
+                    data: {
+                        "pthh": pthh
+                    },
+                    dataType: 'json',
+                    success: function(data, status, errors) {
+                        console.log(data);
+                        document.getElementById('result').innerHTML = data.result.text;
+                        $("h3").removeClass("text-danger")
+                        $("h3").removeClass("text-success")
+                        if (data.message == 'ok')
+                            $("h3").addClass("text-success")
+                        else
+                            $("h3").addClass("text-danger")
+                        console.log(data.result.element)
+                        let htmlElement = "";
+                        for (let x in data.result.element)
+                            htmlElement = htmlElement + "<h6>" + x + ": " + data.result.element[x] + "</h6>";
+                        document.getElementById('element').innerHTML = htmlElement;
+                    },
+                    error: function(data, status, errors) {
+                        console.log(errors);
+                    }
+
+                })
+            });
+        });
+    </script>
+</body>
+
+</html>
