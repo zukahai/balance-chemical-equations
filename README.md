@@ -1,7 +1,7 @@
 # <p align="center">API PTHH</p>
 <p align="center"> <img src="https://github.com/zukahai/HaiZuka/blob/master/Images/balance-chemical-equations_2.png" alt="bg" /> </p>
 
-1. Use API
+## Get Stated
 ```http
 POST https://api-balance-chemical-equations.herokuapp.com/api/v1/pthh
 data: 
@@ -27,7 +27,7 @@ Example with jquery javascript
        }
    })
 ```
-2. Data JSon
+Response result
 ```bash
 {
     "message": "ok",
