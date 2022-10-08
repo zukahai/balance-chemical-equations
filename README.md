@@ -2,6 +2,14 @@
 <p align="center"> <img src="https://github.com/zukahai/HaiZuka/blob/master/Images/balance-chemical-equations_2.png" alt="bg" /> </p>
 
 1. Use API
+```http
+POST https://api-balance-chemical-equations.herokuapp.com/api/v1/pthh
+data: 
+{
+   "pthh": "H2 + O2 = H2O"
+}
+```
+Example with jquery javascript
 ```bash
    $.ajax({
        url: 'https://api-balance-chemical-equations.herokuapp.com/api/v1/pthh',
